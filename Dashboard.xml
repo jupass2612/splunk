@@ -1,0 +1,177 @@
+<dashboard version="1.1" theme="dark">
+  <label>Entrevistas por Universidad</label>
+  <description>Gráfica de barras interactiva que permite redirigir a dashboards específicos según la universidad seleccionada.</description>
+  <row>
+    <panel>
+      <chart>
+        <title>Entrevistas por Universidad</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+                u.Name AS Universidad,
+                COUNT(t.Id) AS Entrevistas
+              FROM 
+                Tickets t
+              JOIN 
+                Sites s ON t.SiteId = s.Id
+              JOIN 
+                Universities u ON s.UniversityId = u.Id
+              GROUP BY 
+                u.Name
+              ORDER BY 
+                Entrevistas DESC;" 
+              connection="lotus"</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <drilldown>
+          <set token="selectedUniversidad">$row.Universidad$</set>
+          <eval token="lowercaseUniversidad">lower($selectedUniversidad$)</eval>
+          <link>/app/search/$lowercaseUniversidad$</link>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Ventas Cerradas</title>
+        <search>
+          <query>
+    | dbxquery query="
+      SELECT 
+      CONCAT(u.Name, ' - ', 
+          CASE 
+              WHEN f.GetIn = TRUE THEN 'Ventas Cerradas'
+              ELSE 'Ventas No Cerradas'
+          END
+      ) AS AgrupacionYEstado,
+      COUNT(*) AS Total
+      FROM 
+      Forms f
+      JOIN Tickets t ON f.Id = t.FormId
+      JOIN Sites s ON t.SiteId = s.Id
+      JOIN Universities u ON s.UniversityId = u.Id
+      GROUP BY 
+      u.Name, f.GetIn
+      ORDER BY 
+      Total DESC;
+    " connection="lotus"
+    </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <drilldown>
+          <set token="selectedAgrupacionYEstado">$row.AgrupacionYEstado$</set>
+          <set token="selectedTotal">$row.Total$</set>
+          <!-- Elimina cualquier referencia 'Ventas Cerradas' o 'Ventas No Cerradas' de la cadena -->
+          <eval token="selectedUniversity">if(isnotnull($selectedAgrupacionYEstado$), lower(replace(replace($selectedAgrupacionYEstado$, " - Ventas Cerradas", ""), " - Ventas No Cerradas", "")), "")</eval>
+          <!-- Cambia el enlace para que sea en minúsculas -->
+          <link>/app/search/$selectedUniversity$</link>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <search>
+          <query>| dbxquery query="
+    SELECT 
+        CONCAT(
+            u.Name,
+            ' - ', 
+            DATE(t.Created)
+        ) AS Agrupación,
+        COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
+        COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\",
+        COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\",
+        COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\",
+        COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\",
+        COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
+    FROM 
+        Forms f
+    JOIN 
+        Tickets t ON f.Id = t.FormId
+    JOIN 
+        Sites s ON t.SiteId = s.Id
+    JOIN 
+        Universities u ON s.UniversityId = u.Id
+    GROUP BY 
+        CONCAT(u.Name, ' - ', DATE(t.Created))
+    ORDER BY 
+        DATE(t.Created) ASC, Agrupación ASC;
+" connection="lotus"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="height">340</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="selectedAgrupacion">$row.Agrupacion$</set>
+          <set token="selectedTotal">$row.Total$</set>
+          <!-- Extrae solo el nombre de la universidad -->
+          <eval token="selectedUniversity">if(isnotnull($selectedAgrupacion$), trim(split($selectedAgrupacion$, " - ")[0]), "")</eval>
+          <!-- Crea un enlace usando solo el nombre de la universidad -->
+          <link>/app/search/university/$selectedUniversity$</link>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <search>
+          <query>| dbxquery query="
+    SELECT 
+        CONCAT(
+            u.Name,
+            ' - ', 
+            DATE(t.Created)
+        ) AS Agrupación,
+        COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
+        COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\",
+        COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\",
+        COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\",
+        COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\",
+        COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
+    FROM 
+        Forms f
+    JOIN 
+        Tickets t ON f.Id = t.FormId
+    JOIN 
+        Sites s ON t.SiteId = s.Id
+    JOIN 
+        Universities u ON s.UniversityId = u.Id
+    GROUP BY 
+        CONCAT(u.Name, ' - ', DATE(t.Created))
+    ORDER BY 
+        DATE(t.Created) ASC, Agrupación ASC;
+" connection="lotus"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
