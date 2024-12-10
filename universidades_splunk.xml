@@ -1,14 +1,14 @@
 <form version="1.1" theme="dark">
-  <label>ULA</label>
+  <label>IPN</label>
   <fieldset submitButton="false">
     <input type="dropdown" token="plantel_token">
       <label>Selecciona un Plantel</label>
-      <initialValue>Del Valle</initialValue>
+      <initialValue>UPIICSA</initialValue>
       <!-- Valor predeterminado -->
-      <default>Del Valle</default>
+      <default>UPIICSA</default>
       <!-- Si no se selecciona nada -->
       <search>
-        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'ULA' ORDER BY s.Name ASC;" connection="lotus"</query>
+        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'IPN' ORDER BY s.Name ASC;" connection="lotus"</query>
         <earliest>0</earliest>
         <latest></latest>
       </search>
@@ -44,7 +44,7 @@
         JOIN 
             Universities u ON s.UniversityId = u.Id
         WHERE 
-            u.Name = 'ULA'
+            u.Name = 'IPN'
             AND s.Name = '$plantel_token$'
             AND f.GetInReason IS NOT NULL 
             AND f.GetInReason != ''
@@ -91,7 +91,7 @@
                 JOIN 
                     Universities u ON s.UniversityId = u.Id
                 WHERE 
-                    u.Name = 'ULA'
+                    u.Name = 'IPN'
                     AND s.Name = '$plantel_token$'
                 GROUP BY 
                     s.Name, f.GetIn
@@ -127,7 +127,7 @@
                 JOIN 
                     Universities u ON s.UniversityId = u.Id
                 WHERE 
-                    u.Name = 'ULA'
+                    u.Name = 'IPN'
                     AND s.Name = '$plantel_token$'
                 GROUP BY 
                     s.Name, f.GetIn
@@ -168,8 +168,8 @@
         JOIN 
             Universities u ON s.UniversityId = u.Id
         WHERE 
-            u.Name = 'ULA'
-            AND s.Name = 'Del Valle'
+            u.Name = 'IPN'
+            AND s.Name = 'UPIICSA'
         GROUP BY 
             CONCAT(s.Name, ' - ', DATE(t.Created))
         ORDER BY 
@@ -200,7 +200,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -210,10 +210,12 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#085578]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -233,7 +235,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -243,10 +245,12 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#538085]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -266,7 +270,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -276,11 +280,13 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#faf1e2]</option>
         <option name="height">255</option>
         <option name="refresh.display">progressbar</option>
-        <option name="charting.seriesColors">[#faf1e2]</option>
       </chart>
     </panel>
   </row>
@@ -302,7 +308,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -312,10 +318,12 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#e3baaa]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -335,7 +343,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -345,10 +353,12 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#e47e8c]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -368,7 +378,7 @@
       JOIN 
           Universities u ON s.UniversityId = u.Id
       WHERE 
-          u.Name = 'ULA'
+          u.Name = 'IPN'
           AND s.Name = '$plantel_token$'
       GROUP BY 
           CONCAT(s.Name, ' - ', DATE(t.Created))
@@ -378,10 +388,12 @@
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>
@@ -410,7 +422,7 @@
     JOIN 
         Universities u ON s.UniversityId = u.Id
     WHERE 
-        u.Name = 'ULA'
+        u.Name = 'IPN'
         AND s.Name = '$plantel_token$'
     GROUP BY 
         CONCAT(s.Name, ' - ', DATE(t.Created), ' - ', CONCAT(sl.Name, ' ', sl.LastName))
@@ -423,10 +435,11 @@
         <option name="charting.axisLabelsY.majorUnit">1</option>
         <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisTitleY.text">Criterios Faltantes</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">bar</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>

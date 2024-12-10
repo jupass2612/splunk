@@ -82,7 +82,7 @@
           <set token="selectedTotal">$row.Total$</set>
           <!-- Elimina cualquier referencia 'Ventas Cerradas' o 'Ventas No Cerradas' de la cadena -->
           <eval token="selectedUniversity">if(isnotnull($selectedAgrupacionYEstado$), lower(replace(replace($selectedAgrupacionYEstado$, " - Ventas Cerradas", ""), " - Ventas No Cerradas", "")), "")</eval>
-          <!-- Cambia el enlace para que sea en minúsculas -->
+          <!-- Cambia el enlace para que sea en minúscIPNs -->
           <link>/app/search/$selectedUniversity$</link>
         </drilldown>
       </chart>
