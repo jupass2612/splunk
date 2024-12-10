@@ -1,0 +1,357 @@
+<form version="1.1" theme="dark">
+  <label>ULA</label>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="plantel_token">
+      <label>Selecciona un Plantel</label>
+      <initialValue>Del Valle</initialValue>
+      <!-- Valor predeterminado -->
+      <default>Del Valle</default>
+      <!-- Si no se selecciona nada -->
+      <search>
+        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'ULA' ORDER BY s.Name ASC;" connection="lotus"</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <fieldForLabel>Plantel</fieldForLabel>
+      <fieldForValue>Plantel</fieldForValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <a href="/app/search/buena" target="_blank" style="font-size:16px; color:WHITE; text-decoration:NONE;">
+          Volver al Dashboard Principal
+        </a>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Cierre de Venta</title>
+      <chart>
+        <title>Razones de no ventas</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    `CualeslarazonporlaquenosegenerolaventaInscripcion` AS Razon,
+    COUNT(*) AS Total
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Universidad = 'ULA' 
+    AND Plantel = '$plantel_token$'
+    AND `CualeslarazonporlaquenosegenerolaventaInscripcion` IS NOT NULL
+GROUP BY 
+    `CualeslarazonporlaquenosegenerolaventaInscripcion`
+ORDER BY 
+    Total DESC;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisTitleX.text">Razones</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="height">345.99</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Cierre de Venta</title>
+      <chart>
+        <title>Ventas Cerradas</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    `Serealizaunaventainscripcion` AS EstadoVenta,
+    COUNT(*) AS Total
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    `Serealizaunaventainscripcion`
+ORDER BY 
+    Total DESC;
+" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <search>
+          <query>| dbxquery query="SELECT 
+    `Serealizaunaventainscripcion` AS EstadoVenta,
+    COUNT(*) AS Total
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    `Serealizaunaventainscripcion`
+ORDER BY 
+    Total DESC;
+" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Calificación de Criterios</title>
+      <table>
+        <title>Criterios Faltantes</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto,
+    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional,
+    SUM(CASE WHEN `3Identificaciondenecesidades` = 'No cumple' THEN 1 ELSE 0 END) AS Identificacion_de_necesidades,
+    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional,
+    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones,
+    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Presentación y Atención Inmediata al Prospecto</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#085578]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Saludo Institucional</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#538085]</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Identificación de Necesidades</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `3Identificaciondenecesidades` = 'No cumple' THEN 1 ELSE 0 END) AS Identificacion_de_necesidades
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#faf1e2]</option>
+        <option name="height">255</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Conocimiento de Oferta Educacional</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#e3baaa]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Manejo de Objeciones</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#e47e8c]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Cierre de Venta</title>
+        <search>
+          <query>| dbxquery query="SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+    AND Universidad = 'ULA'
+    AND Plantel = '$plantel_token$'
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Criterios Faltantes por Asesor</title>
+        <search>
+          <query>| dbxquery query="
+    SELECT 
+        CONCAT(DATE(Fechadecita), ' - ', NombredelAsesor) AS Agrupación,
+        COUNT(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
+        COUNT(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 END) AS \"Saludo institucional\",
+        COUNT(CASE WHEN `3Identificaciondenecesidades` = 'No cumple' THEN 1 END) AS \"Identificación de necesidades\",
+        COUNT(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 END) AS \"Conocimiento de oferta educacional\",
+        COUNT(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 END) AS \"Manejo de objeciones\",
+        COUNT(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 END) AS \"Cierre de venta\"
+    FROM 
+        `LotusNuevoActualizado`.`Hoja1`
+    WHERE 
+        Universidad = 'ULA'
+        AND Plantel = '$plantel_token$'
+        AND Fechadecita IS NOT NULL
+    GROUP BY 
+        CONCAT(Plantel, ' - ', DATE(Fechadecita), ' - ', NombredelAsesor)
+    ORDER BY 
+        DATE(Fechadecita) ASC, Agrupación ASC;
+" connection="LotusFormNuevo"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Criterios Faltantes</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

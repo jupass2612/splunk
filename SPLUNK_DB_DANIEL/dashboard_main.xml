@@ -1,5 +1,5 @@
 <dashboard version="1.1" theme="dark">
-  <label>Entrevistas por Universidad</label>
+  <label>Entrevistas por Universidad DB_DANIEL</label>
   <description>Gráfica de barras interactiva que permite redirigir a dashboards específicos según la universidad seleccionada.</description>
   <row>
     <panel>
@@ -43,27 +43,19 @@
       <chart>
         <title>Ventas Cerradas</title>
         <search>
-          <query>
-    | dbxquery query="
-      SELECT 
-      CONCAT(u.Name, ' - ', 
-          CASE 
-              WHEN f.GetIn = TRUE THEN 'Ventas Cerradas'
-              ELSE 'Ventas No Cerradas'
-          END
-      ) AS AgrupacionYEstado,
-      COUNT(*) AS Total
-      FROM 
-      Forms f
-      JOIN Tickets t ON f.Id = t.FormId
-      JOIN Sites s ON t.SiteId = s.Id
-      JOIN Universities u ON s.UniversityId = u.Id
-      GROUP BY 
-      u.Name, f.GetIn
-      ORDER BY 
-      Total DESC;
-    " connection="lotus"
-    </query>
+          <query>| dbxquery query="SELECT 
+    Serealizaunaventainscripcion AS EstadoVenta,
+    COUNT(*) AS Total
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+GROUP BY 
+    Serealizaunaventainscripcion
+ORDER BY 
+    Total DESC;" connection="LotusFormNuevo"
+| eventstats sum(Total) as TotalGeneral
+| eval Porcentaje=round((Total / TotalGeneral) * 100, 2)
+| chart sum(Total) over EstadoVenta
+| eval label=EstadoVenta." (" . Porcentaje . "%)"</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -74,6 +66,7 @@
         <option name="charting.drilldown">all</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="refresh.display">progressbar</option>
         <drilldown>
           <set token="selectedAgrupacionYEstado">$row.AgrupacionYEstado$</set>
           <set token="selectedTotal">$row.Total$</set>
@@ -87,37 +80,41 @@
   </row>
   <row>
     <panel>
+      <table>
+        <title>TENDENCIA_CRITERIOS_FALTANTES_DBDANIEL</title>
+        <search ref="TENDENCIA_CRITERIOS_FALTANTES_DBDANIEL"></search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <chart>
         <search>
           <query>| dbxquery query="
-    SELECT 
-        CONCAT(
-            u.Name,
-            ' - ', 
-            DATE(t.Created)
-        ) AS Agrupación,
-        COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
-        COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\",
-        COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\",
-        COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\",
-        COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\",
-        COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
-    FROM 
-        Forms f
-    JOIN 
-        Tickets t ON f.Id = t.FormId
-    JOIN 
-        Sites s ON t.SiteId = s.Id
-    JOIN 
-        Universities u ON s.UniversityId = u.Id
-    GROUP BY 
-        CONCAT(u.Name, ' - ', DATE(t.Created))
-    ORDER BY 
-        DATE(t.Created) ASC, Agrupación ASC;
-" connection="lotus"</query>
+SELECT 
+    DATE(Fechadecita) AS Fecha,
+    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto,
+    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional,
+    SUM(CASE WHEN `3Identificaciondenecesidades` = 'No cumple' THEN 1 ELSE 0 END) AS Identificacion_de_necesidades,
+    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional,
+    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones,
+    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta
+FROM 
+    `LotusNuevoActualizado`.`Hoja1`
+WHERE 
+    Fechadecita IS NOT NULL
+GROUP BY 
+    DATE(Fechadecita)
+ORDER BY 
+    Fecha;
+
+" connection="LotusFormNuevo"</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.chart.nullValueMode">gaps</option>
         <option name="charting.chart.stackMode">stacked</option>
@@ -135,41 +132,5 @@
         </drilldown>
       </chart>
     </panel>
-    <panel>
-      <table>
-        <search>
-          <query>| dbxquery query="
-    SELECT 
-        CONCAT(
-            u.Name,
-            ' - ', 
-            DATE(t.Created)
-        ) AS Agrupación,
-        COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
-        COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\",
-        COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\",
-        COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\",
-        COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\",
-        COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
-    FROM 
-        Forms f
-    JOIN 
-        Tickets t ON f.Id = t.FormId
-    JOIN 
-        Sites s ON t.SiteId = s.Id
-    JOIN 
-        Universities u ON s.UniversityId = u.Id
-    GROUP BY 
-        CONCAT(u.Name, ' - ', DATE(t.Created))
-    ORDER BY 
-        DATE(t.Created) ASC, Agrupación ASC;
-" connection="lotus"</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-        </search>
-        <option name="drilldown">none</option>
-      </table>
-    </panel>
   </row>
 </dashboard>
-
