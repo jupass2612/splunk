@@ -1,14 +1,14 @@
 <form version="1.1" theme="dark">
-  <label>ULA</label>
+  <label>UTC</label>
   <fieldset submitButton="false">
     <input type="dropdown" token="plantel_token">
       <label>Selecciona un Plantel</label>
-      <initialValue>Del Valle</initialValue>
+      <initialValue>ZONA ROSA</initialValue>
       <!-- Valor predeterminado -->
-      <default>Del Valle</default>
+      <default>ZONA ROSA</default>
       <!-- Si no se selecciona nada -->
       <search>
-        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'ULA' ORDER BY s.Name ASC;" connection="lotus"</query>
+        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'UTC' ORDER BY s.Name ASC;" connection="lotus"</query>
         <earliest>0</earliest>
         <latest></latest>
       </search>
@@ -19,7 +19,7 @@
   <row>
     <panel>
       <html>
-        <a href="/app/search/buena" target="_blank" style="font-size:16px; color:WHITE; text-decoration:NONE;">
+        <a href="/app/search/basededatos_daniel" target="_blank" style="font-size:16px; color:WHITE; text-decoration:NONE;">
           Volver al Dashboard Principal
         </a>
       </html>
@@ -37,7 +37,7 @@
 FROM 
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
-    Universidad = 'ULA' 
+    Universidad = 'UTC' 
     AND Plantel = '$plantel_token$'
     AND `CualeslarazonporlaquenosegenerolaventaInscripcion` IS NOT NULL
 GROUP BY 
@@ -70,7 +70,7 @@ ORDER BY
 FROM 
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
-    Universidad = 'ULA'
+    Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     `Serealizaunaventainscripcion`
@@ -95,7 +95,7 @@ ORDER BY
 FROM 
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
-    Universidad = 'ULA'
+    Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     `Serealizaunaventainscripcion`
@@ -128,7 +128,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -154,7 +154,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -182,7 +182,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -208,7 +208,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -239,7 +239,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -267,7 +267,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -295,7 +295,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'ULA'
+    AND Universidad = 'UTC'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -330,7 +330,7 @@ ORDER BY
     FROM 
         `LotusNuevoActualizado`.`Hoja1`
     WHERE 
-        Universidad = 'ULA'
+        Universidad = 'UTC'
         AND Plantel = '$plantel_token$'
         AND Fechadecita IS NOT NULL
     GROUP BY 
