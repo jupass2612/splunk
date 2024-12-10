@@ -1,5 +1,22 @@
 <form version="1.1" theme="dark">
-   <row>
+  <label>ULA</label>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="plantel_token">
+      <label>Selecciona un Plantel</label>
+      <initialValue>Del Valle</initialValue>
+      <!-- Valor predeterminado -->
+      <default>Del Valle</default>
+      <!-- Si no se selecciona nada -->
+      <search>
+        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'ULA' ORDER BY s.Name ASC;" connection="lotus"</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <fieldForLabel>Plantel</fieldForLabel>
+      <fieldForValue>Plantel</fieldForValue>
+    </input>
+  </fieldset>
+  <row>
     <panel>
       <html>
         <a href="/app/search/buena" target="_blank" style="font-size:16px; color:WHITE; text-decoration:NONE;">
@@ -8,30 +25,13 @@
       </html>
     </panel>
   </row>
-    <label>ULA</label>
-    <fieldset submitButton="false">
-      <input type="dropdown" token="plantel_token">
-        <label>Selecciona un Plantel</label>
-        <initialValue>Del Valle</initialValue>
-        <!-- Valor predeterminado -->
-        <default>Del Valle</default>
-        <!-- Si no se selecciona nada -->
+  <row>
+    <panel>
+      <title>Cierre de Venta</title>
+      <chart>
+        <title>Razones de no ventas</title>
         <search>
-          <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'ULA' ORDER BY s.Name ASC;" connection="lotus"</query>
-          <earliest>0</earliest>
-          <latest></latest>
-        </search>
-        <fieldForLabel>Plantel</fieldForLabel>
-        <fieldForValue>Plantel</fieldForValue>
-      </input>
-    </fieldset>
-    <row>
-      <panel>
-        <title>Cierre de Venta</title>
-        <chart>
-          <title>Razones de no ventas</title>
-          <search>
-            <query>| dbxquery query="
+          <query>| dbxquery query="
         SELECT 
             CONCAT(s.Name, ' - ', f.GetInReason) AS AgrupacionYrazon,
             COUNT(*) AS Cantidad
@@ -53,27 +53,27 @@
         ORDER BY 
             Cantidad DESC;
     " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.axisLabelsY.majorUnit">1</option>
-          <option name="charting.axisTitleX.text">Razones</option>
-          <option name="charting.axisY.minimumNumber">0</option>
-          <option name="charting.chart">bar</option>
-          <option name="charting.drilldown">none</option>
-          <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
-          <option name="height">345.99</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-    </row>
-    <row>
-      <panel>
-        <title>Cierre de Venta</title>
-        <chart>
-          <title>Ventas Cerradas</title>
-          <search>
-            <query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisTitleX.text">Razones</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+        <option name="height">345.99</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Cierre de Venta</title>
+      <chart>
+        <title>Ventas Cerradas</title>
+        <search>
+          <query>
                 | dbxquery query="SELECT 
                     CONCAT(s.Name, ' - ', 
                         CASE 
@@ -98,19 +98,19 @@
                 ORDER BY 
                     Total DESC;" connection="lotus"
               </query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">pie</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-          <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
-        </chart>
-      </panel>
-      <panel>
-        <table>
-          <search>
-            <query>| dbxquery query="SELECT 
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <search>
+          <query>| dbxquery query="SELECT 
                     CONCAT(s.Name, ' - ', 
                         CASE 
                             WHEN f.GetIn = TRUE THEN 'Ventas Cerradas'
@@ -133,20 +133,20 @@
                     s.Name, f.GetIn
                 ORDER BY 
                     Total DESC;" connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="drilldown">none</option>
-        </table>
-      </panel>
-    </row>
-    <row>
-      <panel>
-        <title>Calificación de Criterios</title>
-        <table>
-          <title>Criterios Faltantes</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Calificación de Criterios</title>
+      <table>
+        <title>Criterios Faltantes</title>
+        <search>
+          <query>| dbxquery query="
         SELECT 
             CONCAT(
                 s.Name,
@@ -175,19 +175,19 @@
         ORDER BY 
             DATE(t.Created) ASC, Agrupación ASC;
     " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="drilldown">none</option>
-        </table>
-      </panel>
-    </row>
-    <row>
-      <panel>
-        <chart>
-          <title>Presentación y Atención Inmediata al Prospecto</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Presentación y Atención Inmediata al Prospecto</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\"
@@ -207,19 +207,20 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-      <panel>
-        <chart>
-          <title>Saludo Institucional</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#085578]</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Saludo Institucional</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\"
@@ -239,19 +240,20 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-      <panel>
-        <chart>
-          <title>Identificación de Necesidades</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#538085]</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Identificación de Necesidades</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\"
@@ -271,22 +273,23 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="height">255</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-    </row>
-    <row>
-      <panel>
-        <chart>
-          <title>Conocimiento de Oferta Educacional</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">255</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#faf1e2]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Conocimiento de Oferta Educacional</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\"
@@ -306,19 +309,20 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-      <panel>
-        <chart>
-          <title>Manejo de Objeciones</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#e3baaa]</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Manejo de Objeciones</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\"
@@ -338,19 +342,20 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-      <panel>
-        <chart>
-          <title>Cierre de Venta</title>
-          <search>
-            <query>| dbxquery query="
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#e47e8c]</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Cierre de Venta</title>
+        <search>
+          <query>| dbxquery query="
       SELECT 
           CONCAT(s.Name, ' - ', DATE(t.Created)) AS Agrupación,
           COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
@@ -370,13 +375,59 @@
       ORDER BY 
           DATE(t.Created) ASC;
   " connection="lotus"</query>
-            <earliest>-24h@h</earliest>
-            <latest>now</latest>
-          </search>
-          <option name="charting.chart">line</option>
-          <option name="charting.drilldown">none</option>
-          <option name="refresh.display">progressbar</option>
-        </chart>
-      </panel>
-    </row>
-  </form>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#ffaa6a]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Criterios Faltantes por Asesor</title>
+        <search>
+          <query>| dbxquery query="
+    SELECT 
+        CONCAT(s.Name, ' - ', DATE(t.Created), ' - ', CONCAT(sl.Name, ' ', sl.LastName)) AS Agrupación,
+        COUNT(CASE WHEN f.Presentation = 0 OR f.Presentation IS NULL THEN 1 END) AS \"Presentación y atención inmediata al prospecto\",
+        COUNT(CASE WHEN f.InstituteWelcome = 0 OR f.InstituteWelcome IS NULL THEN 1 END) AS \"Saludo institucional\",
+        COUNT(CASE WHEN f.NeedsIdentification = 0 OR f.NeedsIdentification IS NULL THEN 1 END) AS \"Identificación de necesidades\",
+        COUNT(CASE WHEN f.EducationalOffer = 0 OR f.EducationalOffer IS NULL THEN 1 END) AS \"Conocimiento de oferta educacional\",
+        COUNT(CASE WHEN f.ObjectionManagment = 0 OR f.ObjectionManagment IS NULL THEN 1 END) AS \"Manejo de objeciones\",
+        COUNT(CASE WHEN f.SellClose = 0 OR f.SellClose IS NULL THEN 1 END) AS \"Cierre de venta\"
+    FROM 
+        Forms f
+    JOIN 
+        Tickets t ON f.Id = t.FormId
+    JOIN 
+        Sellers sl ON t.SellerId = sl.Id
+    JOIN 
+        Sites s ON t.SiteId = s.Id
+    JOIN 
+        Universities u ON s.UniversityId = u.Id
+    WHERE 
+        u.Name = 'ULA'
+        AND s.Name = '$plantel_token$'
+    GROUP BY 
+        CONCAT(s.Name, ' - ', DATE(t.Created), ' - ', CONCAT(sl.Name, ' ', sl.LastName))
+    ORDER BY 
+        DATE(t.Created) ASC, Agrupación ASC;
+" connection="lotus"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Criterios Faltantes</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="charting.seriesColors">[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]</option>
+      </chart>
+    </panel>
+  </row>
+</form>
