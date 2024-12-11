@@ -1,14 +1,22 @@
 <form version="1.1" theme="dark">
-  <label>UTC</label>
+  <label>TESOEM</label>
   <fieldset submitButton="false">
     <input type="dropdown" token="plantel_token">
       <label>Selecciona un Plantel</label>
-      <initialValue>ZONA ROSA</initialValue>
+      <initialValue>La Paz</initialValue>
       <!-- Valor predeterminado -->
-      <default>ZONA ROSA</default>
+      <default>La Paz</default>
       <!-- Si no se selecciona nada -->
       <search>
-        <query>| dbxquery query="SELECT DISTINCT s.Name AS Plantel FROM Sites s JOIN Universities u ON s.UniversityId = u.Id WHERE u.Name = 'UTC' ORDER BY s.Name ASC;" connection="lotus"</query>
+        <query>| dbxquery query="
+    SELECT DISTINCT 
+        Plantel 
+    FROM 
+        `LotusNuevoActualizado`.`Hoja1`
+    WHERE 
+        Universidad = 'TESOEM'
+    ORDER BY 
+        Plantel ASC;" connection="LotusFormNuevo"</query>
         <earliest>0</earliest>
         <latest></latest>
       </search>
@@ -31,19 +39,21 @@
       <chart>
         <title>Razones de no ventas</title>
         <search>
-          <query>| dbxquery query="SELECT 
-    `CualeslarazonporlaquenosegenerolaventaInscripcion` AS Razon,
-    COUNT(*) AS Total
-FROM 
-    `LotusNuevoActualizado`.`Hoja1`
-WHERE 
-    Universidad = 'UTC' 
-    AND Plantel = '$plantel_token$'
-    AND `CualeslarazonporlaquenosegenerolaventaInscripcion` IS NOT NULL
-GROUP BY 
-    `CualeslarazonporlaquenosegenerolaventaInscripcion`
-ORDER BY 
-    Total DESC;" connection="LotusFormNuevo"</query>
+          <query>| dbxquery query="
+    SELECT 
+        `CualeslarazonporlaquenosegenerolaventaInscripcion` AS Razon,
+        COUNT(*) AS Total
+    FROM 
+        `LotusNuevoActualizado`.`Hoja1`
+    WHERE 
+        Universidad = 'TESOEM' 
+        AND Plantel = '$plantel_token$'
+        AND `CualeslarazonporlaquenosegenerolaventaInscripcion` IS NOT NULL
+        AND `CualeslarazonporlaquenosegenerolaventaInscripcion` != 'No aplica'
+    GROUP BY 
+        `CualeslarazonporlaquenosegenerolaventaInscripcion`
+    ORDER BY 
+        Total DESC;" connection="LotusFormNuevo"</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -70,7 +80,7 @@ ORDER BY
 FROM 
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
-    Universidad = 'UTC'
+    Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     `Serealizaunaventainscripcion`
@@ -95,7 +105,7 @@ ORDER BY
 FROM 
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
-    Universidad = 'UTC'
+    Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     `Serealizaunaventainscripcion`
@@ -128,7 +138,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -154,7 +164,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -182,7 +192,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -191,10 +201,12 @@ ORDER BY
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisY.minimumNumber">0</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="charting.seriesColors">[#538085]</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -208,7 +220,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -239,7 +251,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -267,7 +279,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -295,7 +307,7 @@ FROM
     `LotusNuevoActualizado`.`Hoja1`
 WHERE 
     Fechadecita IS NOT NULL
-    AND Universidad = 'UTC'
+    AND Universidad = 'TESOEM'
     AND Plantel = '$plantel_token$'
 GROUP BY 
     DATE(Fechadecita)
@@ -330,7 +342,7 @@ ORDER BY
     FROM 
         `LotusNuevoActualizado`.`Hoja1`
     WHERE 
-        Universidad = 'UTC'
+        Universidad = 'TESOEM'
         AND Plantel = '$plantel_token$'
         AND Fechadecita IS NOT NULL
     GROUP BY 
