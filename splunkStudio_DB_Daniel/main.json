@@ -1,0 +1,235 @@
+{
+    "visualizations": {
+        "viz_ejMVkjjB": {
+            "type": "splunk.column",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "xAxisLabelRotation": 0,
+                "yAxisMajorTickInterval": 1,
+                "xAxisTitleVisibility": "show",
+                "yAxisTitleVisibility": "show",
+                "y2AxisTitleVisibility": "show",
+                "yAxisMin": 0,
+                "yAxisScale": "linear",
+                "stackMode": "auto",
+                "legendDisplay": "off",
+                "seriesColors": [
+                    "#085578",
+                    "#538085",
+                    "#faf1e2",
+                    "#e3baaa",
+                    "#e47e8c",
+                    "#ffaa6a"
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_9vNtCv3U"
+            },
+            "eventHandlers": [
+                {
+                    "type": "drilldown.setToken",
+                    "options": {
+                        "tokens": [
+                            {
+                                "token": "selectedUniversidadLower",
+                                "key": "row.UniversidadLower.value"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "drilldown.customUrl",
+                    "options": {
+                        "url": "http://localhost:8000/en-GB/app/search/$selectedUniversidadLower$_copy"
+                    }
+                }
+            ],
+            "title": "Entrevistas por Universidad",
+            "showProgressBar": true
+        },
+        "viz_5vxWx30X": {
+            "type": "splunk.pie",
+            "options": {
+                "seriesColors": [
+                    "#085578",
+                    "#538085",
+                    "#faf1e2",
+                    "#e3baaa",
+                    "#e47e8c",
+                    "#ffaa6a"
+                ],
+                "label": "> primary | seriesByName('AgrupacionYEstado')",
+                "value": "> primary | seriesByName('sum(Total)')"
+            },
+            "dataSources": {
+                "primary": "ds_9GAWkr0B"
+            },
+            "eventHandlers": [
+                {
+                    "type": "drilldown.setToken",
+                    "options": {
+                        "tokens": [
+                            {
+                                "token": "selectedAgrupacionYEstado",
+                                "key": "row.AgrupacionYEstado.value"
+                            },
+                            {
+                                "token": "selectedTotal",
+                                "key": "row.Total.value"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "title": "Ventas Cerradas",
+            "showProgressBar": true
+        },
+        "viz_IHOVn3Pd": {
+            "type": "splunk.table",
+            "options": {
+                "drilldown": "none",
+                "dataOverlayMode": "none",
+                "showRowNumbers": false,
+                "showInternalFields": false
+            },
+            "dataSources": {
+                "primary": "ds_zWHwYKj6"
+            },
+            "title": "ddd"
+        },
+        "viz_KQ1QyDYe": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "nullValueDisplay": "gaps",
+                "seriesColors": [
+                    "#085578",
+                    "#538085",
+                    "#faf1e2",
+                    "#e3baaa",
+                    "#e47e8c",
+                    "#ffaa6a"
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_oGlITMLM"
+            },
+            "showProgressBar": true
+        }
+    },
+    "dataSources": {
+        "ds_9vNtCv3U": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n                    LOWER(Universidad) AS UniversidadLower, \n                    COUNT(*) AS Encuestas\n                    FROM \n                    `LotusNuevoActualizado`.`Hoja1`\n                    GROUP BY \n                    Universidad\n                    ORDER BY \n                    Encuestas DESC;\n                    \" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": ""
+                }
+            },
+            "name": "Entrevistas por Universidad search"
+        },
+        "ds_9GAWkr0B": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"\r\n      SELECT \r\n      CONCAT(Hoja1.Universidad, ' - ', \r\n          CASE \r\n              WHEN Hoja1.Serealizaunaventainscripcion = 'Cumple' THEN 'Ventas Cerradas'\r\n              ELSE 'Ventas No Cerradas'\r\n          END\r\n      ) AS AgrupacionYEstado,\r\n      COUNT(*) AS Total\r\n      FROM \r\n      `LotusNuevoActualizado`.`Hoja1` AS Hoja1\r\n      GROUP BY \r\n      Hoja1.Universidad, Hoja1.Serealizaunaventainscripcion\r\n      ORDER BY \r\n      Total DESC;\" connection=\"LotusFormNuevo\"\r\n| eventstats sum(Total) as TotalGeneral\r\n| eval Porcentaje=round((Total / TotalGeneral) * 100, 2)\r\n| chart sum(Total) over AgrupacionYEstado\r\n| eval label=AgrupacionYEstado.\" (\" . Porcentaje . \"%)\"\r\n",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Ventas Cerradas search"
+        },
+        "ds_zWHwYKj6": {
+            "type": "ds.savedSearch",
+            "options": {
+                "ref": "ddd"
+            },
+            "name": "ddd search"
+        },
+        "ds_oGlITMLM": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"\nSELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto,\n    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional,\n    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional,\n    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones,\n    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\n\n\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": ""
+                }
+            },
+            "name": "Line chart search"
+        }
+    },
+    "defaults": {
+        "dataSources": {
+            "ds.search": {
+                "options": {
+                    "queryParameters": {}
+                }
+            }
+        }
+    },
+    "inputs": {},
+    "layout": {
+        "type": "absolute",
+        "options": {
+            "width": 1440,
+            "height": 840,
+            "display": "auto"
+        },
+        "structure": [
+            {
+                "item": "viz_ejMVkjjB",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_5vxWx30X",
+                "type": "block",
+                "position": {
+                    "x": 720,
+                    "y": 0,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_IHOVn3Pd",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 250,
+                    "w": 1440,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_KQ1QyDYe",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 500,
+                    "w": 1440,
+                    "h": 340
+                }
+            }
+        ],
+        "globalInputs": []
+    },
+    "description": "Gráfica de barras interactiva que permite redirigir a dashboards específicos según la universidad seleccionada.",
+    "title": "Entrevistas por Universidad DB_DANIEL Copy"
+}

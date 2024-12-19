@@ -1,0 +1,474 @@
+{
+    "visualizations": {
+        "viz_CkC8Tmuz": {
+            "type": "splunk.markdown",
+            "options": {
+                "markdown": "**Volver al Dashboard Principal**",
+                "fontSize": "extraLarge",
+                "backgroundColor": "#000000"
+            },
+            "cornerRadius": [
+                50,
+                50,
+                50,
+                50
+            ],
+            "eventHandlers": [
+                {
+                    "type": "drilldown.linkToDashboard",
+                    "options": {
+                        "app": "search",
+                        "dashboard": "entrevistas_por_universidad_db_daniel_copy"
+                    }
+                }
+            ]
+        },
+        "viz_WJfL5r6b": {
+            "type": "splunk.bar",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "xAxisTitleText": "Razones",
+                "yAxisMin": 0,
+                "seriesColors": "[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]"
+            },
+            "dataSources": {
+                "primary": "ds_GigjYRGK"
+            },
+            "title": "Cierre de Venta - Razones de no ventas",
+            "showProgressBar": true
+        },
+        "viz_ZqxB2Buh": {
+            "type": "splunk.pie",
+            "options": {
+                "seriesColors": "[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]"
+            },
+            "dataSources": {
+                "primary": "ds_FpqKRY0M"
+            },
+            "title": "Cierre de Venta - Ventas Cerradas",
+            "showProgressBar": true
+        },
+        "viz_r3VTeib0": {
+            "type": "splunk.table",
+            "options": {
+                "drilldown": "none",
+                "showInternalFields": false
+            },
+            "dataSources": {
+                "primary": "ds_0RM1VQ4J"
+            },
+            "showProgressBar": true
+        },
+        "viz_JGSBFDzj": {
+            "type": "splunk.table",
+            "options": {
+                "drilldown": "none",
+                "showInternalFields": false
+            },
+            "dataSources": {
+                "primary": "ds_gxuwTGE1"
+            },
+            "title": "Calificación de Criterios - Criterios Faltantes",
+            "showProgressBar": true
+        },
+        "viz_PobodhR3": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "seriesColors": "[#085578]"
+            },
+            "dataSources": {
+                "primary": "ds_jcKTBgrx"
+            },
+            "title": "Presentación y Atención Inmediata al Prospecto",
+            "showProgressBar": true
+        },
+        "viz_a4gxQOsB": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "seriesColors": "[#538085]"
+            },
+            "dataSources": {
+                "primary": "ds_TIgnf8t5"
+            },
+            "title": "Saludo Institucional",
+            "showProgressBar": true
+        },
+        "viz_Xhi1DaQm": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "seriesColors": "[#e3baaa]"
+            },
+            "dataSources": {
+                "primary": "ds_niwAYchi"
+            },
+            "title": "Conocimiento de Oferta Educacional",
+            "showProgressBar": true
+        },
+        "viz_6VXKBhGW": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "seriesColors": "[#e47e8c]"
+            },
+            "dataSources": {
+                "primary": "ds_2zbTptpF"
+            },
+            "title": "Manejo de Objeciones",
+            "showProgressBar": true
+        },
+        "viz_ak52GfnJ": {
+            "type": "splunk.line",
+            "options": {
+                "yAxisAbbreviation": "off",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "yAxisMin": 0,
+                "seriesColors": "[#ffaa6a]"
+            },
+            "dataSources": {
+                "primary": "ds_ig1Ata5w"
+            },
+            "title": "Cierre de Venta",
+            "showProgressBar": true
+        },
+        "viz_wrFmdkUG": {
+            "type": "splunk.bar",
+            "options": {
+                "yAxisAbbreviation": "auto",
+                "y2AxisAbbreviation": "off",
+                "showRoundedY2AxisLabels": false,
+                "legendTruncation": "ellipsisMiddle",
+                "showY2MajorGridLines": true,
+                "yAxisMajorTickInterval": 1,
+                "xAxisTitleVisibility": "hide",
+                "yAxisTitleText": "Criterios Faltantes",
+                "yAxisMin": 0,
+                "yAxisScale": "linear",
+                "seriesColors": "[#085578, #538085, #faf1e2, #e3baaa, #e47e8c,#ffaa6a]"
+            },
+            "dataSources": {
+                "primary": "ds_syFW0Obx"
+            },
+            "title": "Criterios Faltantes por Asesor",
+            "showProgressBar": true
+        }
+    },
+    "dataSources": {
+        "ds_GCK6fWSL": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"\n    SELECT DISTINCT \n        Plantel \n    FROM \n        `LotusNuevoActualizado`.`Hoja1`\n    WHERE \n        Universidad = 'UAM'\n    ORDER BY \n        Plantel ASC;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": ""
+                }
+            },
+            "name": "Selecciona un Plantel search"
+        },
+        "ds_GigjYRGK": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"\n    SELECT \n        `CualeslarazonporlaquenosegenerolaventaInscripcion` AS Razon,\n        COUNT(*) AS Total\n    FROM \n        `LotusNuevoActualizado`.`Hoja1`\n    WHERE \n        Universidad = 'UAM' \n        AND Plantel = '$plantel_token$'\n        AND `CualeslarazonporlaquenosegenerolaventaInscripcion` IS NOT NULL\n        AND `CualeslarazonporlaquenosegenerolaventaInscripcion` != 'No aplica'\n    GROUP BY \n        `CualeslarazonporlaquenosegenerolaventaInscripcion`\n    ORDER BY \n        Total DESC;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Cierre de Venta - Razones de no ventas search"
+        },
+        "ds_FpqKRY0M": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    `Serealizaunaventainscripcion` AS EstadoVenta,\n    COUNT(*) AS Total\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    `Serealizaunaventainscripcion`\nORDER BY \n    Total DESC;\n\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Cierre de Venta - Ventas Cerradas search"
+        },
+        "ds_0RM1VQ4J": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    `Serealizaunaventainscripcion` AS EstadoVenta,\n    COUNT(*) AS Total\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    `Serealizaunaventainscripcion`\nORDER BY \n    Total DESC;\n\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Table search"
+        },
+        "ds_gxuwTGE1": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto,\n    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional,\n    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional,\n    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones,\n    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Calificaci_n de Criterios - Criterios Faltantes search"
+        },
+        "ds_jcKTBgrx": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 ELSE 0 END) AS Presentacion_y_atencion_inmediata_al_prospecto\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Presentaci_n y Atenci_n Inmediata al Prospecto search"
+        },
+        "ds_TIgnf8t5": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 ELSE 0 END) AS Saludo_institucional\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Saludo Institucional search"
+        },
+        "ds_niwAYchi": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 ELSE 0 END) AS Conocimiento_de_oferta_educacional\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Conocimiento de Oferta Educacional search"
+        },
+        "ds_2zbTptpF": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 ELSE 0 END) AS Manejo_de_objeciones\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Manejo de Objeciones search"
+        },
+        "ds_ig1Ata5w": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"SELECT \n    DATE(Fechadecita) AS Fecha,\n    SUM(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 ELSE 0 END) AS Cierre_de_venta\nFROM \n    `LotusNuevoActualizado`.`Hoja1`\nWHERE \n    Fechadecita IS NOT NULL\n    AND Universidad = 'UAM'\n    AND Plantel = '$plantel_token$'\nGROUP BY \n    DATE(Fechadecita)\nORDER BY \n    Fecha;\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Cierre de Venta search"
+        },
+        "ds_syFW0Obx": {
+            "type": "ds.search",
+            "options": {
+                "query": "| dbxquery query=\"\n    SELECT \n        CONCAT(DATE(Fechadecita), ' - ', NombredelAsesor) AS Agrupación,\n        COUNT(CASE WHEN `1Presentacionyatencioninmediataalprospecto` = 'No cumple' THEN 1 END) AS \\\"Presentación y atención inmediata al prospecto\\\",\n        COUNT(CASE WHEN `2Saludoinstitucional` = 'No cumple' THEN 1 END) AS \\\"Saludo institucional\\\",\n        COUNT(CASE WHEN `4Conocimientodeofertaeducacional` = 'No cumple' THEN 1 END) AS \\\"Conocimiento de oferta educacional\\\",\n        COUNT(CASE WHEN `5Manejodeobjeciones` = 'No cumple' THEN 1 END) AS \\\"Manejo de objeciones\\\",\n        COUNT(CASE WHEN `6Cierredeventa` = 'No cumple' THEN 1 END) AS \\\"Cierre de venta\\\"\n    FROM \n        `LotusNuevoActualizado`.`Hoja1`\n    WHERE \n        Universidad = 'UAM'\n        AND Plantel = '$plantel_token$'\n        AND Fechadecita IS NOT NULL\n    GROUP BY \n        CONCAT(Plantel, ' - ', DATE(Fechadecita), ' - ', NombredelAsesor)\n    ORDER BY \n        DATE(Fechadecita) ASC, Agrupación ASC;\n\" connection=\"LotusFormNuevo\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "name": "Criterios Faltantes por Asesor search"
+        }
+    },
+    "defaults": {
+        "dataSources": {
+            "ds.search": {
+                "options": {
+                    "queryParameters": {}
+                }
+            }
+        }
+    },
+    "inputs": {
+        "input_SXEfMYcB": {
+            "type": "input.dropdown",
+            "options": {
+                "defaultValue": "Iztapalapa",
+                "items": "> frame(label, value) | prepend(formattedStatics) | objects()",
+                "token": "plantel_token"
+            },
+            "title": "Selecciona un Plantel",
+            "context": {
+                "formattedConfig": {
+                    "number": {
+                        "prefix": ""
+                    }
+                },
+                "formattedStatics": "> statics | formatByType(formattedConfig)",
+                "statics": [],
+                "label": "> primary | seriesByName(\"Plantel\") | renameSeries(\"label\") | formatByType(formattedConfig)",
+                "value": "> primary | seriesByName(\"Plantel\") | renameSeries(\"value\") | formatByType(formattedConfig)"
+            },
+            "dataSources": {
+                "primary": "ds_GCK6fWSL"
+            }
+        }
+    },
+    "layout": {
+        "type": "absolute",
+        "options": {
+            "submitButton": false,
+            "height": 1845,
+            "width": 1440,
+            "display": "auto"
+        },
+        "structure": [
+            {
+                "item": "viz_CkC8Tmuz",
+                "type": "block",
+                "position": {
+                    "x": 590,
+                    "y": 20,
+                    "w": 260,
+                    "h": 30
+                }
+            },
+            {
+                "item": "viz_WJfL5r6b",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 60,
+                    "w": 1440,
+                    "h": 345
+                }
+            },
+            {
+                "item": "viz_ZqxB2Buh",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 400,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_r3VTeib0",
+                "type": "block",
+                "position": {
+                    "x": 720,
+                    "y": 400,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_JGSBFDzj",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 650,
+                    "w": 1440,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_PobodhR3",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 900,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_a4gxQOsB",
+                "type": "block",
+                "position": {
+                    "x": 720,
+                    "y": 900,
+                    "w": 720,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_Xhi1DaQm",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 1150,
+                    "w": 480,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_6VXKBhGW",
+                "type": "block",
+                "position": {
+                    "x": 480,
+                    "y": 1150,
+                    "w": 480,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_ak52GfnJ",
+                "type": "block",
+                "position": {
+                    "x": 960,
+                    "y": 1150,
+                    "w": 480,
+                    "h": 250
+                }
+            },
+            {
+                "item": "viz_wrFmdkUG",
+                "type": "block",
+                "position": {
+                    "x": 0,
+                    "y": 1400,
+                    "w": 1440,
+                    "h": 250
+                }
+            }
+        ],
+        "globalInputs": [
+            "input_SXEfMYcB"
+        ]
+    },
+    "description": "",
+    "title": "UAM Copy"
+}
